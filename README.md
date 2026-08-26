@@ -141,7 +141,7 @@ Career Compass considers multiple dimensions of a student's profile, including:
 
 ---
 
-# 🏗️ Project Architecture
+### 🏗️ Project Architecture
 
 Career_Compass/
 │
