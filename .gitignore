@@ -36,6 +36,9 @@ build/
 *.pkl
 *.pickle
 
+# Allow the trained Career Compass model required for deployment
+!models/final_placement_model.joblib
+
 # Jupyter
 .ipynb_checkpoints/
 
