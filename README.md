@@ -139,6 +139,8 @@ Career Compass considers multiple dimensions of a student's profile, including:
                 └───────────────────┘
 
 
+---
+
 # 🏗️ Project Architecture
 
 Career_Compass/
@@ -176,3 +178,366 @@ Career_Compass/
 ├── .gitignore
 ├── README.md
 └── career_compass.db
+
+---
+
+
+## 🛠️ Technology Stack
+
+### Frontend
+-Next.js
+-React
+-TypeScript
+-Tailwind CSS
+
+
+### Backend
+-Python
+-FastAPI
+-Pydantic
+-Uvicorn
+
+
+### Machine Learning
+-Python
+-Pandas
+-NumPy
+-Scikit-learn
+-Joblib
+
+
+### AI Layer
+-LLM-based career report generation
+-Prompt engineering
+-Structured model output
+
+
+### Data & Storage
+-SQLite
+-CSV / structured datasets
+
+
+### Development Tools
+-Git
+-GitHub
+-VS Code
+-Jupyter Notebook
+
+
+---
+
+# 🔬 Machine Learning Pipeline
+
+The ML component follows a structured pipeline:
+
+Raw Student Data
+       │
+       ▼
+Data Cleaning
+       │
+       ▼
+Feature Engineering
+       │
+       ▼
+Feature Validation
+       │
+       ▼
+Model Training
+       │
+       ▼
+Model Evaluation
+       │
+       ▼
+Best Model
+       │
+       ▼
+Prediction Service
+
+
+The trained model is loaded by the backend and used through the prediction service rather than training a model every time a student submits the assessment.
+
+
+---
+
+# 📊 Prediction & Recommendation Flow
+
+A student's profile is first validated before being passed to the prediction service.
+
+Student Request
+      │
+      ▼
+Pydantic Validation
+      │
+      ▼
+Feature Processing
+      │
+      ▼
+ML Model
+      │
+      ├──► Prediction
+      │
+      └──► Confidence / Probability
+                    │
+                    ▼
+            Recommendation Engine
+                    │
+                    ▼
+             Career Report
+
+
+This architecture keeps the prediction logic separate from the presentation and recommendation layers.
+
+---
+
+# 🎨 User Experience
+
+The frontend is designed around a simple flow:
+
+01 — Understand
+
+Learn what Career Compass evaluates and how the platform works.
+
+02 — Assess
+
+Provide academic, technical, experience, and profile information.
+
+03 — Analyze
+
+The system processes the submitted profile through the ML pipeline.
+
+04 — Improve
+
+Receive skill-gap insights and personalized recommendations.
+
+05 — Plan
+
+Use the generated career report to decide what to work on next.
+
+
+---
+
+# ⚙️ Local Setup
+
+1. Clone the repository
+
+git clone https://github.com/iabhishek765/career-compass.git
+cd career-compass
+
+##  🐍 Backend Setup
+
+Create a Python virtual environment:
+
+python -m venv venv
+
+Windows
+venv\Scripts\activate
+
+macOS / Linux
+source venv/bin/activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+Start the FastAPI server:
+
+python -m uvicorn app.main:app --reload
+
+The backend will be available at:
+
+http://127.0.0.1:8000
+
+FastAPI documentation:
+
+http://127.0.0.1:8000/docs
+
+## 💻 Frontend Setup
+
+Move into the frontend directory:
+
+cd frontend
+
+Install dependencies:
+
+npm install
+
+Start the development server:
+
+npm run dev
+
+The frontend will normally be available at:
+
+http://localhost:3000
+
+# 🔗 API
+
+The frontend communicates with the backend through the prediction API.
+
+Prediction Endpoint
+POST /predict
+
+The endpoint accepts a validated student profile and returns the prediction and associated career analysis.
+
+Example flow:
+Frontend
+   │
+   │ POST /predict
+   ▼
+FastAPI Backend
+   │
+   ▼
+Prediction Service
+   │
+   ▼
+ML Model
+   │
+   ▼
+Recommendation Engine
+   │
+   ▼
+JSON Response
+   │
+   ▼
+Frontend Career Report
+
+
+---
+
+# 🧪 Development & Experiments
+
+The notebooks/ directory contains experimentation and analysis work used during development.
+
+These notebooks help document:
+
+-Data exploration
+-Feature analysis
+-Model experiments
+-Evaluation
+-ML development decisions
+
+This separation keeps experimentation separate from the production prediction pipeline.
+
+--- 
+
+# 🛡️ Important ML Design Consideration
+
+A major consideration during development was avoiding target leakage.
+
+Features that directly represent or derive from the prediction target should not be used as model inputs.
+
+For example, a synthetic placement score used during dataset generation should not simply be passed into the model to predict placement status.
+
+The goal is to ensure that model performance represents meaningful relationships within the student profile rather than information that directly reveals the target.
+
+
+---
+
+# 🎯 Project Goals
+
+Career Compass was designed with three main goals:
+
+1.Prediction
+Estimate a student's current career / placement readiness.
+
+2.Explanation
+Help students understand the strengths and gaps behind the prediction.
+
+3.Action
+Convert the analysis into practical next steps.
+
+
+---
+
+
+# 🚧 Current Status
+
+Completed
+ Student profile assessment
+ ML prediction pipeline
+ Feature validation
+ Skill-gap analysis
+ Recommendation engine
+ AI-assisted career reporting
+ FastAPI backend
+ Next.js frontend
+ Career Compass landing page
+ GitHub repository
+ Production deployment
+ Automated testing
+ Authentication
+ Persistent user accounts
+ Production database
+
+
+ ---
+
+ # 🔮 Future Improvements
+
+ Possible future improvements include:
+
+-User authentication and profiles
+-Historical assessment tracking
+-Improved model explainability
+-Model monitoring
+-More diverse training data
+-Automated model retraining
+-Career-specific prediction models
+-Interactive skill-roadmap generation
+-Resume analysis
+-Job-role matching
+-Job-market integration
+-Personalized learning-resource recommendations
+
+---
+
+# 🌐 Project Links
+
+GitHub:
+https://github.com/iabhishek765/career-compass
+
+Live Demo:
+Coming soon.
+
+---
+
+
+# 📚 What I Learned
+
+Building Career Compass involved working across multiple areas of software and machine learning engineering:
+
+-Designing an end-to-end ML application
+-Feature engineering and validation
+-Avoiding target leakage
+-Building REST APIs with FastAPI
+-Connecting a frontend with an ML backend
+-Structuring ML inference services
+-Designing recommendation systems
+-Integrating LLM-assisted reporting
+-Working with Next.js and TypeScript
+-Managing a project with Git and GitHub
+-Separating experimentation from production code
+
+
+---
+
+# 👨‍💻 Author
+
+Abhishek
+
+B.Tech Computer Science Engineering — AI & ML
+
+Interested in:
+
+-Artificial Intelligence
+-Machine Learning
+-Data Science
+-ML Engineering
+-AI-powered applications
+
+
+---
+
+# ⭐ If you find this project interesting
+
+Feel free to explore the repository, review the implementation, and share feedback.
+

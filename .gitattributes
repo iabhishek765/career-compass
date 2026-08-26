@@ -1,0 +1,6 @@
+# Treat Jupyter notebooks as documentation/experimentation
+*.ipynb linguist-documentation
+
+# Keep generated/build artifacts out of language statistics
+*.pyc linguist-generated
+__pycache__/ linguist-generated
