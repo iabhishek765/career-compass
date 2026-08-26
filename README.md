@@ -143,43 +143,56 @@ Career Compass considers multiple dimensions of a student's profile, including:
 
 ---
 
-### 🏗️ Project Architecture
+# 🏗️ Project Architecture
 
+Career Compass follows a modular architecture that separates the frontend, backend, machine learning components, data, experimentation, and supporting resources.
+
+```text
 Career_Compass/
 │
-├── app/                    # FastAPI application
-│   ├── routes/             # API endpoints
-│   ├── schemas/            # Request/response schemas
-│   └── services/           # Application services
+├── app/                         # FastAPI backend
+│   ├── routes/                  # API endpoints
+│   ├── schemas/                # Request / response schemas
+│   └── services/               # Backend application services
 │
-├── frontend/               # Next.js frontend
+├── frontend/                    # Next.js frontend
 │   ├── src/
-│   │   ├── features/
-│   │   ├── services/
-│   │   ├── types/
-│   │   └── lib/
-│   ├── public/
-│   └── package.json
+│   │   ├── features/            # Feature-specific UI modules
+│   │   ├── services/            # Frontend API / service logic
+│   │   ├── types/               # TypeScript types
+│   │   └── lib/                 # Shared frontend utilities
+│   ├── public/                  # Static frontend assets
+│   └── package.json             # Frontend dependencies
 │
-├── data/                   # Dataset and data resources
+├── data/                        # Dataset and data resources
 │
-├── models/                 # Trained ML models
+├── models/                      # Trained ML models
 │
-├── notebooks/              # Experiments and analysis
+├── notebooks/                   # Experiments and analysis
 │
-├── prompts/                # AI prompt templates
+├── prompts/                     # AI prompt templates
 │
-├── reports/                # Project reports and documentation
+├── reports/                     # Project reports and documentation
 │
-├── repositories/           # Data / repository utilities
+├── repositories/                # Data / repository utilities
 │
-├── sql/                    # SQL resources and queries
+├── sql/                         # SQL resources and queries
 │
-├── src/                    # Core ML / data processing code
+├── src/                         # Core ML / data processing code
 │
-├── .gitignore
-├── README.md
-└── career_compass.db
+├── .gitignore                   # Git ignore rules
+├── requirements.txt             # Python dependencies
+├── README.md                    # Project documentation
+└── career_compass.db            # Local application database
+```
+
+### Architecture Principles
+
+- **Separation of concerns** — frontend, backend, ML, and data components are independently organized.
+- **Modular services** — prediction, validation, and recommendation logic are separated into dedicated services.
+- **API-driven communication** — the frontend communicates with the backend through REST APIs.
+- **Reusable ML inference** — the trained model is loaded for inference instead of retraining per request.
+- **Experimentation isolation** — notebooks and experiments are separated from application code.
 
 ---
 
@@ -187,107 +200,170 @@ Career_Compass/
 ## 🛠️ Technology Stack
 
 ### Frontend
--Next.js
--React
--TypeScript
--Tailwind CSS
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
 
 
 ### Backend
--Python
--FastAPI
--Pydantic
--Uvicorn
+- Python
+- FastAPI
+- Pydantic
+- Uvicorn
 
 
 ### Machine Learning
--Python
--Pandas
--NumPy
--Scikit-learn
--Joblib
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+- Joblib
 
 
 ### AI Layer
--LLM-based career report generation
--Prompt engineering
--Structured model output
+- LLM-based career report generation
+- Prompt engineering
+- Structured model output
 
 
 ### Data & Storage
--SQLite
--CSV / structured datasets
+- SQLite
+- CSV / structured datasets
 
 
 ### Development Tools
--Git
--GitHub
--VS Code
--Jupyter Notebook
+- Git
+- GitHub
+- VS Code
+- Jupyter Notebook
 
 
 ---
 
 # 🔬 Machine Learning Pipeline
 
-The ML component follows a structured pipeline:
+The machine learning component follows a structured training and inference pipeline.
 
-Raw Student Data
-       │
-       ▼
-Data Cleaning
-       │
-       ▼
-Feature Engineering
-       │
-       ▼
+### Training Pipeline
+
+```text
+┌─────────────────────┐
+│   Raw Student Data  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│    Data Cleaning    │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Feature Engineering │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│  Feature Validation │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│   Model Training    │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│   Model Evaluation  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│     Best Model      │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Prediction Service  │
+└─────────────────────┘
+```
+
+### Inference
+
+The trained model is loaded by the backend and used through the prediction service. A new model is **not trained every time** a student submits an assessment.
+
+The inference flow is:
+
+```text
+Student Profile
+      │
+      ▼
 Feature Validation
-       │
-       ▼
-Model Training
-       │
-       ▼
-Model Evaluation
-       │
-       ▼
-Best Model
-       │
-       ▼
-Prediction Service
+      │
+      ▼
+Feature Processing
+      │
+      ▼
+Trained ML Model
+      │
+      ▼
+Prediction
+      │
+      ▼
+Recommendation Engine
+      │
+      ▼
+Career Report
+```
 
-
-The trained model is loaded by the backend and used through the prediction service rather than training a model every time a student submits the assessment.
+This separation keeps model training and production inference as independent stages.
 
 
 ---
 
 # 📊 Prediction & Recommendation Flow
 
-A student's profile is first validated before being passed to the prediction service.
+A student's profile is first validated and processed before being passed to the prediction service.
 
-Student Request
-      │
-      ▼
-Pydantic Validation
-      │
-      ▼
-Feature Processing
-      │
-      ▼
-ML Model
-      │
-      ├──► Prediction
-      │
-      └──► Confidence / Probability
-                    │
-                    ▼
-            Recommendation Engine
-                    │
-                    ▼
-             Career Report
+```text
+┌──────────────────────┐
+│   Student Request    │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Pydantic Validation  │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Feature Processing   │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│      ML Model        │
+└──────────┬───────────┘
+           │
+           ├──────────────► Prediction
+           │
+           └──────────────► Confidence / Probability
+                              │
+                              ▼
+                    ┌──────────────────────┐
+                    │ Recommendation       │
+                    │       Engine         │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │ AI-Assisted Career   │
+                    │       Report         │
+                    └──────────────────────┘
+```
 
-
-This architecture keeps the prediction logic separate from the presentation and recommendation layers.
+The architecture keeps the prediction logic separate from the presentation and recommendation layers. This makes the system easier to maintain, test, and extend.
+     
 
 ---
 
@@ -295,23 +371,23 @@ This architecture keeps the prediction logic separate from the presentation and 
 
 The frontend is designed around a simple flow:
 
-01 — Understand
+01 — **Understand**
 
 Learn what Career Compass evaluates and how the platform works.
 
-02 — Assess
+02 — **Assess**
 
 Provide academic, technical, experience, and profile information.
 
-03 — Analyze
+03 — **Analyze**
 
 The system processes the submitted profile through the ML pipeline.
 
-04 — Improve
+04 — **Improve**
 
 Receive skill-gap insights and personalized recommendations.
 
-05 — Plan
+05 — **Plan**
 
 Use the generated career report to decide what to work on next.
 
@@ -320,14 +396,14 @@ Use the generated career report to decide what to work on next.
 
 # ⚙️ Local Setup
 
-1. Clone the repository
+1. **Clone the repository**
 
 git clone https://github.com/iabhishek765/career-compass.git
 cd career-compass
 
 ##  🐍 Backend Setup
 
-Create a Python virtual environment:
+2. **Create a Python virtual environment:**
 
 python -m venv venv
 
@@ -337,11 +413,11 @@ venv\Scripts\activate
 macOS / Linux
 source venv/bin/activate
 
-Install dependencies:
+3. **Install dependencies:**
 
 pip install -r requirements.txt
 
-Start the FastAPI server:
+4. **Start the FastAPI server:**
 
 python -m uvicorn app.main:app --reload
 
@@ -355,7 +431,7 @@ http://127.0.0.1:8000/docs
 
 ## 💻 Frontend Setup
 
-Move into the frontend directory:
+5. **Move into the frontend directory:**
 
 cd frontend
 
@@ -363,7 +439,7 @@ Install dependencies:
 
 npm install
 
-Start the development server:
+6. **Start the development server:**
 
 npm run dev
 
@@ -373,37 +449,110 @@ http://localhost:3000
 
 # 🔗 API
 
-The frontend communicates with the backend through the prediction API.
+The frontend communicates with the FastAPI backend through a prediction endpoint.
 
-Prediction Endpoint
+### Prediction Endpoint
+
+```text
 POST /predict
+```
 
-The endpoint accepts a validated student profile and returns the prediction and associated career analysis.
+The endpoint accepts a validated student profile and returns:
 
-Example flow:
-Frontend
-   │
-   │ POST /predict
-   ▼
-FastAPI Backend
-   │
-   ▼
-Prediction Service
-   │
-   ▼
-ML Model
-   │
-   ▼
-Recommendation Engine
-   │
-   ▼
-JSON Response
-   │
-   ▼
-Frontend Career Report
+- Placement / career-readiness prediction
+- Prediction probability / confidence
+- Skill-gap analysis
+- Personalized recommendations
+- AI-assisted career report
 
+### Request Flow
 
----
+```text
+┌──────────────────┐
+│     Frontend     │
+│    Next.js UI    │
+└────────┬─────────┘
+         │
+         │ POST /predict
+         ▼
+┌──────────────────┐
+│  FastAPI Backend │
+│   API Endpoint   │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│ Feature / Input  │
+│    Validation    │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│ Prediction       │
+│    Service       │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│   ML Prediction  │
+│      Model       │
+└────────┬─────────┘
+         │
+         ├──────────────► Prediction
+         │
+         ▼
+┌──────────────────┐
+│ Skill Gap &      │
+│ Recommendation   │
+│     Engine       │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│ AI-Assisted      │
+│ Career Report    │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│ Frontend Career  │
+│      Report      │
+└──────────────────┘
+```
+
+### Local Development
+
+Backend:
+
+```bash
+python -m uvicorn app.main:app --reload
+```
+
+Backend URL:
+
+```text
+http://127.0.0.1:8000
+```
+
+FastAPI documentation:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend URL:
+
+```text
+http://localhost:3000
+```
 
 # 🧪 Development & Experiments
 
@@ -411,11 +560,11 @@ The notebooks/ directory contains experimentation and analysis work used during 
 
 These notebooks help document:
 
--Data exploration
--Feature analysis
--Model experiments
--Evaluation
--ML development decisions
+- Data exploration
+- Feature analysis
+- Model experiments
+- Evaluation
+- ML development decisions
 
 This separation keeps experimentation separate from the production prediction pipeline.
 
@@ -438,13 +587,13 @@ The goal is to ensure that model performance represents meaningful relationships
 
 Career Compass was designed with three main goals:
 
-1.Prediction
+1. **Prediction**
 Estimate a student's current career / placement readiness.
 
-2.Explanation
+2. **Explanation**
 Help students understand the strengths and gaps behind the prediction.
 
-3.Action
+3. **Action**
 Convert the analysis into practical next steps.
 
 
@@ -453,22 +602,29 @@ Convert the analysis into practical next steps.
 
 # 🚧 Current Status
 
-Completed
- Student profile assessment
- ML prediction pipeline
- Feature validation
- Skill-gap analysis
- Recommendation engine
- AI-assisted career reporting
- FastAPI backend
- Next.js frontend
- Career Compass landing page
- GitHub repository
- Production deployment
- Automated testing
- Authentication
- Persistent user accounts
- Production database
+### Completed
+- Student profile assessment
+- ML prediction pipeline
+- Feature validation
+- Skill-gap analysis
+- Recommendation engine
+- AI-assisted career reporting
+- FastAPI backend
+- Next.js frontend
+- Career Compass landing page
+- GitHub repository
+- Production deployment
+- Automated testing
+- Authentication
+- Persistent user accounts
+- Production database
+
+ ### In Progress
+- Production deployment
+- Automated testing
+- Authentication
+- Persistent user accounts
+- Production database
 
 
  ---
@@ -477,18 +633,18 @@ Completed
 
  Possible future improvements include:
 
--User authentication and profiles
--Historical assessment tracking
--Improved model explainability
--Model monitoring
--More diverse training data
--Automated model retraining
--Career-specific prediction models
--Interactive skill-roadmap generation
--Resume analysis
--Job-role matching
--Job-market integration
--Personalized learning-resource recommendations
+- User authentication and profiles
+- Historical assessment tracking
+- Improved model explainability
+- Model monitoring
+- More diverse training data
+- Automated model retraining
+- Career-specific prediction models
+- Interactive skill-roadmap generation
+- Resume analysis
+- Job-role matching
+- Job-market integration
+- Personalized learning-resource recommendations
 
 ---
 
@@ -507,17 +663,17 @@ Coming soon.
 
 Building Career Compass involved working across multiple areas of software and machine learning engineering:
 
--Designing an end-to-end ML application
--Feature engineering and validation
--Avoiding target leakage
--Building REST APIs with FastAPI
--Connecting a frontend with an ML backend
--Structuring ML inference services
--Designing recommendation systems
--Integrating LLM-assisted reporting
--Working with Next.js and TypeScript
--Managing a project with Git and GitHub
--Separating experimentation from production code
+- Designing an end-to-end ML application
+- Feature engineering and validation
+- Avoiding target leakage
+- Building REST APIs with FastAPI
+- Connecting a frontend with an ML backend
+- Structuring ML inference services
+- Designing recommendation systems
+- Integrating LLM-assisted reporting
+- Working with Next.js and TypeScript
+- Managing a project with Git and GitHub
+- Separating experimentation from production code
 
 
 ---
@@ -530,11 +686,11 @@ B.Tech Computer Science Engineering — AI & ML
 
 Interested in:
 
--Artificial Intelligence
--Machine Learning
--Data Science
--ML Engineering
--AI-powered applications
+- Artificial Intelligence
+- Machine Learning
+- Data Science
+- ML Engineering
+- AI-powered applications
 
 
 ---
