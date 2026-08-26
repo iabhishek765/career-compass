@@ -137,3 +137,42 @@ Career Compass considers multiple dimensions of a student's profile, including:
                 │ Personalized      │
                 │ Career Guidance   │
                 └───────────────────┘
+
+
+# 🏗️ Project Architecture
+
+Career_Compass/
+│
+├── app/                    # FastAPI application
+│   ├── routes/             # API endpoints
+│   ├── schemas/            # Request/response schemas
+│   └── services/           # Application services
+│
+├── frontend/               # Next.js frontend
+│   ├── src/
+│   │   ├── features/
+│   │   ├── services/
+│   │   ├── types/
+│   │   └── lib/
+│   ├── public/
+│   └── package.json
+│
+├── data/                   # Dataset and data resources
+│
+├── models/                 # Trained ML models
+│
+├── notebooks/              # Experiments and analysis
+│
+├── prompts/                # AI prompt templates
+│
+├── reports/                # Project reports and documentation
+│
+├── repositories/           # Data / repository utilities
+│
+├── sql/                    # SQL resources and queries
+│
+├── src/                    # Core ML / data processing code
+│
+├── .gitignore
+├── README.md
+└── career_compass.db
