@@ -138,6 +138,8 @@ Career Compass considers multiple dimensions of a student's profile, including:
                 │ Career Guidance   │
                 └───────────────────┘
 
+```
+
 
 ---
 
