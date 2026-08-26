@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ================================
+   CAREER COMPASS DESIGN TOKENS
+================================ */
+
+:root {
+
+  /* Background */
+
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+
+  /* Cards */
+
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+
+  /* Popover */
+
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
+
+  /* Primary */
+
+  --primary: #4F46E5;
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary */
+
+  --secondary: #EEF2FF;
+  --secondary-foreground: #312E81;
+
+  /* Accent */
+
+  --accent: #06B6D4;
+  --accent-foreground: #FFFFFF;
+
+  /* Muted */
+
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+
+  /* Borders */
+
+  --border: #E2E8F0;
+  --input: #CBD5E1;
+  --ring: #4F46E5;
+
+  /* Status */
+
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+
+  /* Radius */
+
+  --radius: 1rem;
+}
+
+/* ================================
+      DARK THEME
+================================ */
+
+.dark {
+
+  --background: #020617;
+  --foreground: #F8FAFC;
+
+  --card: #0F172A;
+  --card-foreground: #F8FAFC;
+
+  --popover: #0F172A;
+  --popover-foreground: #F8FAFC;
+
+  --primary: #6366F1;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #1E293B;
+  --secondary-foreground: #F8FAFC;
+
+  --accent: #22D3EE;
+  --accent-foreground: #FFFFFF;
+
+  --muted: #1E293B;
+  --muted-foreground: #94A3B8;
+
+  --border: #334155;
+  --input: #334155;
+  --ring: #6366F1;
+
+  --success: #22C55E;
+  --warning: #FBBF24;
+  --danger: #F87171;
+}
+
+/* ================================
+        BASE
+================================ */
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+}
+
+/* ================================
+      SCROLLBAR
+================================ */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94A3B8;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748B;
+}
+
+/* ================================
+      UTILITIES
+================================ */
+
+.glass-card {
+  background: rgba(255,255,255,.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+.dark .glass-card {
+  background: rgba(15,23,42,.75);
+}
+
+.gradient-text {
+  background: linear-gradient(
+      135deg,
+      #6366F1,
+      #06B6D4
+  );
+
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.shadow-soft {
+  box-shadow:
+      0 8px 24px rgba(0,0,0,.08);
+}
+
+.shadow-card {
+  box-shadow:
+      0 15px 35px rgba(15,23,42,.08);
+}
