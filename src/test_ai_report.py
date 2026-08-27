@@ -1,4 +1,4 @@
-from ai_career_report import generate_career_report
+from src.ai_career_report import generate_career_report
 
 
 student_data = {

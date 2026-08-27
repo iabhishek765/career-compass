@@ -27,7 +27,7 @@ class GroqClient:
 
         response = self.client.chat.completions.create(
 
-            model="llama-3.3-70b-versatile",
+            model="openai/gpt-oss-120b",
 
             messages=[
                 {
@@ -40,9 +40,9 @@ class GroqClient:
                 }
             ],
 
-            temperature=0.3,
+            reasoning_effort="low",
 
-            max_tokens=350
+            max_completion_tokens=1200
         )
 
         return response.choices[0].message.content
