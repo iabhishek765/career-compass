@@ -1,5 +1,9 @@
 "use client";
 
+
+import { apiRequest } from "@/services/api";
+
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -110,13 +114,16 @@ const [submitError, setSubmitError] = useState("");
 
     console.log("Sending payload:", payload);
 
-    const response = await fetch("http://127.0.0.1:8000/predict/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    const response = await fetch(
+  `${process.env.NEXT_PUBLIC_API_URL}/predict/`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  }
+);
 
     if (!response.ok) {
       const errorData = await response.json();
