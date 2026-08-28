@@ -13,6 +13,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
+
 initialize_database()
 
 
@@ -25,9 +26,11 @@ frontend_url = os.getenv(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-    frontend_url,
-    "http://127.0.0.1:3000"
-],
+        frontend_url,
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://career-compass-frontend-ymb8.onrender.com",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
